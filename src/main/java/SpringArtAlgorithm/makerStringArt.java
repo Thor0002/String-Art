@@ -3,22 +3,32 @@ package SpringArtAlgorithm;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
 import java.awt.Color;
 
-public class makerStringArt {
+public class MakerStringArt {
+	private int quality  = 1;
+	
+	public MakerStringArt() {}
+	public MakerStringArt(int new_quality) {quality = new_quality;}
+	
+	public void setQuality(int new_quality) {quality = new_quality;}
 
 	//	public static void main(String[] args) throws IOException {
-	public static BufferedImage getStringArtImage(BufferedImage image) {
-		int numPins = 256;
-		int numLines = 2000;
-		int center = 500;
-		int radius = 500;
-		BufferedImage result = new BufferedImage(2*radius + 1, 2*radius + 1, image.getType());
+	public  File getStringArtImage(File file) {
 		
+		
+		int numPins = 256;
+		int numLines = 1360 * quality; // 3 Варианта: (400, 1360), (800, 2720), (1200, 4080) 
+		int center = 400 * quality;   //               низкое,      среднее,     высокое     качество
+		int radius = 400 * quality;
+		File output = new File("C:\\Users\\Кирилл\\Desktop\\Java\\Spring Art Telegram Bot\\New Image.jpg");
 		try {
 //			File file = new File("Image3.jpg");
-//			BufferedImage image = ImageIO.read(file);
-
+			BufferedImage image = ImageIO.read(file);
+			BufferedImage result = new BufferedImage(2*radius + 1, 2*radius + 1, image.getType());
 
 
 			int[] filter = {1, 2, 1, 2, 4, 2, 1, 2, 1};
@@ -29,13 +39,13 @@ public class makerStringArt {
 
 			BufferedImage imgCropped = ModifierOfImage.cropImage(greyImage);
 
-			imgCropped = ModifierOfImage.resizeImage(imgCropped, 1001, 1001);
+			imgCropped = ModifierOfImage.resizeImage(imgCropped, 2*radius + 1, 2*radius + 1);
 
 			// save pixels from masked Image to Array
-			int[][] modifedImage = new int[1001][1001];
-			for(int x = 0; x < 1000; x++) {
-				for(int y = 0; y < 1000; y++) {
-					if((x - 500)*(x - 500) + (y - 500)*(y - 500) > 500 * 500) {
+			int[][] modifedImage = new int[2*radius + 1][2*radius + 1];
+			for(int x = 0; x < 2*radius; x++) {
+				for(int y = 0; y < 2*radius; y++) {
+					if((x - center)*(x - center) + (y - center)*(y - center) > radius * radius) {
 						modifedImage[x][y] = 255;
 					} else {
 						modifedImage[x][y] = new Color(imgCropped.getRGB(x, y)).getBlue();
@@ -106,12 +116,12 @@ public class makerStringArt {
 
 
 //			File output = new File("New Image.jpg");
-//			ImageIO.write(result, "jpg", output);
+			ImageIO.write(result, "jpg", output);
 		} catch (IOException e) {
 			System.out.println("Ошибка что-то произошло не так");
 		}
 		
-		return result;
+		return output;
 	}
 
 	// Method to find Pixels on line betwen (x0, y0) and (x1, y1) : Bresenham's algorithm
