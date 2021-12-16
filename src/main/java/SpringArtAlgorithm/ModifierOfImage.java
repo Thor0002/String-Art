@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.stream.IntStream;
 
 public class ModifierOfImage {
-	// Method to blur image
+	// Blur image
 		public static BufferedImage blur(BufferedImage originalImage, int[] filter, int filterWidth) {
 		    if (filter.length % filterWidth != 0) {
 		        throw new IllegalArgumentException("filter contains a incomplete row");
@@ -25,7 +25,6 @@ public class ModifierOfImage {
 		    final int centerOffsetX = filterWidth / 2;
 		    final int centerOffsetY = filter.length / filterWidth / 2;
 
-		    // apply filter
 		    for (int h = height - filter.length / filterWidth + 1, w = width - filterWidth + 1, y = 0; y < h; y++) {
 		        for (int x = 0; x < w; x++) {
 		            int r = 0;
@@ -57,7 +56,7 @@ public class ModifierOfImage {
 		    return result;
 		}
 		
-		// Method to resize image
+		// Изменение размера изображения
 		public static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
 			BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, originalImage.getType());
 			Graphics2D graphics2D = resizedImage.createGraphics();
@@ -66,7 +65,7 @@ public class ModifierOfImage {
 			return resizedImage;
 		}
 		
-		// Method to make an image black and white and invert
+		// Делает изображение черном-белым и инвертирует его 
 		public static BufferedImage imageToGrayScaleAndInvert(BufferedImage originalImage) {
 			BufferedImage greyImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
 			for(int x = 0; x < originalImage.getWidth(); x++) {
@@ -83,6 +82,7 @@ public class ModifierOfImage {
 			return greyImage;
 		}
 		
+		// Обрезает изображение
 		public static BufferedImage cropImage(BufferedImage originalImage) {
 			int height = originalImage.getHeight();
 			int width = originalImage.getWidth();

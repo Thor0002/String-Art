@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 
 import SpringArtAlgorithm.MakerStringArt;
 
-
+//Команда для настройки качества
 public class QualityCommand extends ServiceCommand {
 	private MakerStringArt modifier;
 
@@ -27,15 +27,15 @@ public class QualityCommand extends ServiceCommand {
         	sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
         			"Это команда позволяет указать качество(точность) для формирования изображения.\n" +
         	        "Сейчас доступны варианты: 1, 2, 3. Чем больше, тем точнее. Но займёт больше времени.\n" + 
-        			"Чтобы выбрать нужно ввести команду\n/quality и номер качетсва \n" +
-        	        "Например: \"/quality 2\"");
+        			"Чтобы выбрать нужно ввести команду\n/quality и номер качетсва\n" +
+        	        "Например: \"/quality 2\". По умолчанию стоит 1.");
         } else if (strings.length == 1) {
         	InputStream str = new ByteArrayInputStream(strings[0].getBytes());
         	Scanner sc = new Scanner(str);
         	int a = 0;
         	try {
-    			a = sc.nextInt();//Считываем второе число
-    		} catch(Exception e) {
+    			a = sc.nextInt();
+    		} catch(java.util.InputMismatchException e) {
     			sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName,
             			"Похоже вы ввели соообщение неверного формата. Чтобы посмотреть правильный формат введите /quality\n");
     			sc.close();

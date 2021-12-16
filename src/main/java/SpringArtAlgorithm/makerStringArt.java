@@ -15,18 +15,15 @@ public class MakerStringArt {
 	public MakerStringArt(int new_quality) {quality = new_quality;}
 	
 	public void setQuality(int new_quality) {quality = new_quality;}
-
-	//	public static void main(String[] args) throws IOException {
+    
+	// Формирует String Art из изображения
 	public  File getStringArtImage(File file) {
-		
-		
 		int numPins = 256;
 		int numLines = 1360 * quality; // 3 Варианта: (400, 1360), (800, 2720), (1200, 4080) 
 		int center = 400 * quality;   //               низкое,      среднее,     высокое     качество
 		int radius = 400 * quality;
 		File output = new File("C:\\Users\\Кирилл\\Desktop\\Java\\Spring Art Telegram Bot\\New Image.jpg");
 		try {
-//			File file = new File("Image3.jpg");
 			BufferedImage image = ImageIO.read(file);
 			BufferedImage result = new BufferedImage(2*radius + 1, 2*radius + 1, image.getType());
 
@@ -41,7 +38,6 @@ public class MakerStringArt {
 
 			imgCropped = ModifierOfImage.resizeImage(imgCropped, 2*radius + 1, 2*radius + 1);
 
-			// save pixels from masked Image to Array
 			int[][] modifedImage = new int[2*radius + 1][2*radius + 1];
 			for(int x = 0; x < 2*radius; x++) {
 				for(int y = 0; y < 2*radius; y++) {
@@ -77,8 +73,8 @@ public class MakerStringArt {
 
 			int oldPin = 0;
 			int bestPin = 0;
-			int[][] prevLines = new int[numPins][numPins]; // so as not to draw the line again
-			for(int i = 0; i < numPins; i++) {             // initialization
+			int[][] prevLines = new int[numPins][numPins]; 
+			for(int i = 0; i < numPins; i++) {             
 				for(int j = 0; j < numPins; j++) prevLines[i][j] = 0;
 			}
 
@@ -114,8 +110,6 @@ public class MakerStringArt {
 				oldPin = bestPin;
 			}
 
-
-//			File output = new File("New Image.jpg");
 			ImageIO.write(result, "jpg", output);
 		} catch (IOException e) {
 			System.out.println("Ошибка что-то произошло не так");
@@ -124,7 +118,7 @@ public class MakerStringArt {
 		return output;
 	}
 
-	// Method to find Pixels on line betwen (x0, y0) and (x1, y1) : Bresenham's algorithm
+	// Формирует маасив пикселей на прямой между (x0, y0) и (x1, y1): алгоритм Брезенхема
 	public static Pair<ArrayList<Integer>> linePixels(int x0, int y0, int x1, int y1){
 		boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
 		if(steep) {
